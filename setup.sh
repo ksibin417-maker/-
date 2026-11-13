@@ -26,7 +26,7 @@ android {
     compileSdk = 34
     defaultConfig {
         applicationId = "com.example.expensetracker"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -42,6 +42,7 @@ cat > app/src/main/AndroidManifest.xml <<'EOF'
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
+        android:icon="@mipmap/ic_launcher"
         android:label="ചെലവ് ട്രാക്കർ"
         android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
         <activity android:name=".MainActivity" android:exported="true">
@@ -83,4 +84,39 @@ public class MainActivity extends Activity {
         if (web.canGoBack()) web.goBack(); else super.onBackPressed();
     }
 }
+EOF
+
+mkdir -p app/src/main/res/drawable app/src/main/res/values app/src/main/res/mipmap-anydpi-v26
+
+cat > app/src/main/res/values/ic_colors.xml <<'EOF'
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ic_bg">#0F766E</color>
+</resources>
+EOF
+
+if [ -f icon.png ]; then
+  cp icon.png app/src/main/res/drawable/ic_fg.png
+else
+cat > app/src/main/res/drawable/ic_fg.xml <<'EOF'
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <path android:fillColor="#99F6E4"
+        android:pathData="M32,34 h36 a4,4 0 0 1 4,4 v4 h-44 v-4 a4,4 0 0 1 4,-4 z"/>
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M32,40 h44 a4,4 0 0 1 4,4 v26 a4,4 0 0 1 -4,4 h-44 a4,4 0 0 1 -4,-4 v-26 a4,4 0 0 1 4,-4 z"/>
+    <path android:fillColor="#0F766E"
+        android:pathData="M66,57 a4,4 0 1 0 8,0 a4,4 0 1 0 -8,0 z"/>
+</vector>
+EOF
+fi
+
+cat > app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml <<'EOF'
+<?xml version="1.0" encoding="utf-8"?>
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@color/ic_bg"/>
+    <foreground android:drawable="@drawable/ic_fg"/>
+</adaptive-icon>
 EOF
